@@ -22,6 +22,7 @@ namespace AwsomeWebApi
 
 
         //=========================
+ 
         public static IWebHost BuildCustomWebHost(string[] args) =>
             new WebHostBuilder().UseKestrel()
             .UseContentRoot(Directory
@@ -33,16 +34,15 @@ namespace AwsomeWebApi
             )
             .UseIISIntegration()
             .UseStartup<Startup>()
-            .Build();
-
+            .Build(); 
         //=========================================
 
-     /*   public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .Build();*/
+        /*   public static IWebHost BuildWebHost(string[] args) =>
+               WebHost.CreateDefaultBuilder(args)
+               .UseStartup<Startup>()
+               .Build();*/
 
-        /*public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+       /* public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();*/
     }
