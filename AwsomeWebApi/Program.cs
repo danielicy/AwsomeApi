@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AwsomeWebApi.AwsomeServer;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http.Features;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System.IO;
+using AwsomeWebApi.AwsomeServer.Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
+
 
 namespace AwsomeWebApi
 {
+
+
+
     public class Program
     {
         public static void Main(string[] args)
@@ -29,6 +25,7 @@ namespace AwsomeWebApi
        
         //=========================
  
+
         public static IWebHost BuildCustomWebHost(string[] args) =>
             new WebHostBuilder().UseKestrel()
             .UseContentRoot(Directory
@@ -37,7 +34,7 @@ namespace AwsomeWebApi
             )
             .ConfigureLogging(logging =>
             logging.AddConsole().AddDebug()
-            ).UseServer(awsomeServer)
+            ).UseAwesomeServer(o => o.FolderPath = @"c:\sandbox\in")
             .UseIISIntegration()
             .UseStartup<Startup>()
             .Build(); 
