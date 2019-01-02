@@ -16,9 +16,9 @@ namespace AwsomeWebApi
         public static void Main(string[] args)
         {
 
-            BuildCustomWebHost(args).Run();
+           // BuildCustomWebHost(args).Run();
           
-           // BuildWebHost(args).Run();
+            BuildWebHost(args).Run();
             // CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -26,7 +26,7 @@ namespace AwsomeWebApi
         //=========================
  
 
-        public static IWebHost BuildCustomWebHost(string[] args) =>
+       /* public static IWebHost BuildCustomWebHost(string[] args) =>
             new WebHostBuilder().UseKestrel()
             .UseContentRoot(Directory
                 .GetCurrentDirectory())
@@ -37,13 +37,13 @@ namespace AwsomeWebApi
             ).UseAwesomeServer(o => o.FolderPath = @"c:\sandbox\in")
             .UseIISIntegration()
             .UseStartup<Startup>()
-            .Build(); 
+            .Build(); */
         //=========================================
 
-        /*   public static IWebHost BuildWebHost(string[] args) =>
+          public static IWebHost BuildWebHost(string[] args) =>
                WebHost.CreateDefaultBuilder(args)
                .UseStartup<Startup>()
-               .Build();*/
+               .Build();
 
        /* public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
