@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using AwsomeWebApi.AwsomeServer.Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
-
+using AwsomeWebApi.Extensions;
 
 namespace AwsomeWebApi
 {
@@ -41,8 +37,8 @@ namespace AwsomeWebApi
         //=========================================
 
           public static IWebHost BuildWebHost(string[] args) =>
-               WebHost.CreateDefaultBuilder(args)
-               .UseStartup<Startup>()
+               WebHost.CreateDefaultBuilder(args)            
+               .UseStartup<Startup>()            
                .Build();
 
        /* public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

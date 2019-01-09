@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AwsomeWebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -21,61 +22,74 @@ namespace AwsomeWebApi
             services.AddSingleton<IComponent, ComponentB>();
         }
 
+
+        //http://localhost:55428/?value=1232
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
          {
              if (env.IsDevelopment())
              {
                  app.UseDeveloperExceptionPage();
              }
 
-            app.Map("/skip", (skipApp) => skipApp.Run(async (context) => 
-            await context.Response.WriteAsync($"Skip the line!")));
+           /* app.Map("/skip", (skipApp) => skipApp.Run(async (context) => 
+            await context.Response.WriteAsync($"Skip the line!")));*/
 
-            app.Use(async (context, next) =>
-            {
-                var value = context.Request.Query["value"].ToString();
-                if (int.TryParse(value, out int intValue))
-                {
-                    await context.Response.WriteAsync($"You entered a number:{intValue}");
-                }
-                else
-                {
-                    context.Items["value"] = value;
-                    await next();
-                }
-            });
 
-            app.Use(async (context, next) =>
+            app.Map("/skip", (skipApp) => skipApp.UseSkipApp());
+            app.UseNumberChecker();
+            app.UseUpperValue();
+            app.UseVowelMasker();
+            app.Run(async (context) =>
             {
                 var value = context.Items["value"].ToString();
-                if (int.TryParse(value, out int intValue))
-                {
-                    await context.Response.WriteAsync($"You entered a number:{ intValue}");
+                await context.Response.WriteAsync($"You entered a string:{ value}");
+            });
+        
+        /*  app.Use(async (context, next) =>
+          {
+              var value = context.Request.Query["value"].ToString();
+              if (int.TryParse(value, out int intValue))
+              {
+                  await context.Response.WriteAsync($"You entered a number:{intValue}");
+              }
+              else
+              {
+                  context.Items["value"] = value;
+                  await next();
+              }
+          });
+
+          app.Use(async (context, next) =>
+          {
+              var value = context.Items["value"].ToString();
+              if (int.TryParse(value, out int intValue))
+              {
+                  await context.Response.WriteAsync($"You entered a number:{ intValue}");
 }
-                else
-                {
-                    await next();
-                }
-            });
+              else
+              {
+                  await next();
+              }
+          });
 
-            app.Use(async (context, next) =>
-            {
-                var value = context.Items["value"].ToString();
-                context.Items["value"] = value.ToUpper();
-                await next();
-            });
-            app.Use(async (context, next) =>
-            {
-                var value = context.Items["value"].ToString();
-                context.Items["value"] = Regex.Replace(value, "(?<!^)[AEUI](?!$)",
-                "*");
-                await next();
-            });
-            
-            //==================================================
+          app.Use(async (context, next) =>
+          {
+              var value = context.Items["value"].ToString();
+              context.Items["value"] = value.ToUpper();
+              await next();
+          });
+          app.Use(async (context, next) =>
+          {
+              var value = context.Items["value"].ToString();
+              context.Items["value"] = Regex.Replace(value, "(?<!^)[AEUI](?!$)",
+              "*");
+              await next();
+          });*/
 
-            app.Map("/foo",
+        //==================================================
+
+        app.Map("/foo",
                 config =>
                 config.Use(async (context, next) =>
                 await context.Response.WriteAsync("<div><h1>Mexico</h1>" +
@@ -91,6 +105,7 @@ namespace AwsomeWebApi
                 await context.Response.WriteAsync("Welcome to POST /bar")
                 )
                 );
+            //--------------------------------------------------------------
             /*app.Run(async (context) =>
             await context.Response.WriteAsync($"Welcome to the default")
             )*/
@@ -100,11 +115,13 @@ namespace AwsomeWebApi
               {
                   await context.Response.WriteAsync("Hello World!");
               });*/
-            app.Run(async (context) =>
+
+            //---------------------------------------------------------------
+           /*app.Run(async (context) =>
             {
                 var value = context.Items["value"].ToString();
                 await context.Response.WriteAsync($"You entered a string: {value}");
-            });
+            });*/
         }
 
        /* public void Configure(IApplicationBuilder app, IComponent component)
