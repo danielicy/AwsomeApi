@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
+using AwsomeWebApi.Services;
 
 namespace AwsomeWebApi
 {
@@ -22,6 +23,8 @@ namespace AwsomeWebApi
             services.AddRouting();
 
             services.AddSingleton<IComponent, ComponentB>();
+
+            services.AddSingleton<Microsoft.Extensions.Hosting.IHostedService, AwesomeHostedService>();
         }
 
 
